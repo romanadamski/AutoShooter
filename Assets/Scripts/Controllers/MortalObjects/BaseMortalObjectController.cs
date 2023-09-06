@@ -10,10 +10,10 @@ public abstract class BaseMortalObjectController : MonoBehaviour
     protected bool _enemyCollideExited = true;
     protected bool _enemyTriggerExited = true;
 
-    protected virtual void OnCollisionWithEnemyEnter(Collision2D collision) { }
-    protected virtual void OnCollisionWithEnemyExit(Collision2D collision) { }
-    protected virtual void OnTriggerWithEnemyEnter(Collider2D collider) { }
-    protected virtual void OnTriggerWithEnemyExit(Collider2D collider) { }
+    protected virtual void OnCollisionWithEnemyEnter(Collision collision) { }
+    protected virtual void OnCollisionWithEnemyExit(Collision collision) { }
+    protected virtual void OnTriggerWithEnemyEnter(Collider collider) { }
+    protected virtual void OnTriggerWithEnemyExit(Collider collider) { }
     protected virtual string[] GetEnemies() { return new string[] { }; }
 
     public uint LivesCount { get; protected set; }
@@ -33,7 +33,7 @@ public abstract class BaseMortalObjectController : MonoBehaviour
         _collisionController.TriggerExit += TriggerExit;
     }
 
-    private void CollisionEnter(Collision2D collision)
+    private void CollisionEnter(Collision collision)
     {
         if (_enemyCollideExited && _enemyObjectsTags.Contains(collision.transform.tag))
         {
@@ -42,7 +42,7 @@ public abstract class BaseMortalObjectController : MonoBehaviour
         }
     }
 
-    private void CollisionExit(Collision2D collision)
+    private void CollisionExit(Collision collision)
     {
         if (_enemyObjectsTags.Contains(collision.transform.tag))
         {
@@ -51,7 +51,7 @@ public abstract class BaseMortalObjectController : MonoBehaviour
         }
     }
 
-    private void TriggerEnter(Collider2D collider)
+    private void TriggerEnter(Collider collider)
     {
         if (_enemyTriggerExited && _enemyObjectsTags.Contains(collider.transform.tag))
         {
@@ -60,7 +60,7 @@ public abstract class BaseMortalObjectController : MonoBehaviour
         }
     }
 
-    private void TriggerExit(Collider2D collider)
+    private void TriggerExit(Collider collider)
     {
         if (_enemyObjectsTags.Contains(collider.transform.tag))
         {

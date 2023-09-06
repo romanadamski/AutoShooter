@@ -59,19 +59,7 @@ public class GameplayManager : BaseManager<GameplayManager>
     {
         ResetScore();
         LevelSettingsManager.Instance.SetCurrentLevel();
-        for (int i = 0; i < LevelSettingsManager.Instance.CurrentLevel.ObjectsCount; i++)
-        {
-            var shooter = ObjectPoolingManager.Instance.GetFromPool("Shooter");
-            //todo randomize
-            Debug.Log("pozycja: " +
-                (int)(i / Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)) +
-                ", " +
-                (int)(i % Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)));
-            shooter.transform.position = new Vector3((int)(i / Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)),
-                0,
-                (int)(i % Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)));
-            shooter.gameObject.SetActive(true);
-        }
+        GameLauncher.Instance.GamePlane.SpawnGameplayObjects();
     }
 
     private void DecrementScore()

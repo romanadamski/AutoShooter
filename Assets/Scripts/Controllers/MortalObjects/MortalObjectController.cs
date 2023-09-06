@@ -14,7 +14,7 @@ public class MortalObjectController : BaseMortalObjectController
         return new string[] { GameObjectTagsConstants.BULLET };
     }
 
-    protected override void OnTriggerWithEnemyEnter(Collider2D collider)
+    protected override void OnTriggerWithEnemyEnter(Collider collider)
     {
         ObjectPoolingManager.Instance.ReturnToPool(gameObject.GetComponent<BasePoolableController>());
         var randomPieceCount = Random.Range(pieceCountRange.Item1, pieceCountRange.Item2 + 1);

@@ -31,14 +31,4 @@ public class GameplayMenu : BaseMenu
     {
         GameplayManager.Instance.SetEndGameplayState();
     }
-
-    private void UnsubscribeFromEvents()
-    {
-        EventsManager.Instance.GameplayStarted -= GameplayStarted;
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeFromEvents();
-    }
 }

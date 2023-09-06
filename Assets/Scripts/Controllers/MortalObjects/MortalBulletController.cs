@@ -7,7 +7,7 @@ public class MortalBulletController : BaseMortalObjectController
         return new string[] { GameObjectTagsConstants.OBJECT };
     }
 
-    protected override void OnTriggerWithEnemyEnter(Collider2D collider)
+    protected override void OnTriggerWithEnemyEnter(Collider collider)
     {
         ObjectPoolingManager.Instance.ReturnToPool(gameObject.GetComponent<BasePoolableController>());
     }
