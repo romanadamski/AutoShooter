@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6f882ca5ad6ff41876967a40c316cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsCounter: {fileID: 0}
+  objectsCounter: {fileID: 7769694821669157510}
   menuButton: {fileID: 6939305853101628689}
 --- !u!1 &2739692312308325556
 GameObject:

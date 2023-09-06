@@ -17,8 +17,14 @@ public class GameplayMenu : BaseMenu
 
     private void SubscribeToEvents()
     {
-        EventsManager.Instance.PlayerLoseLife += OnPlayerLoseLife;
-        EventsManager.Instance.PlayerSpawned += OnPlayerSpawned;
+        if (!EventsManager.Instance) return;
+
+        EventsManager.Instance.GameplayStarted += GameplayStarted;
+    }
+
+    private void GameplayStarted()
+    {
+        objectsCounter.text = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount.ToString();
     }
 
     private void OnGoToMainMenuClick()
@@ -26,27 +32,9 @@ public class GameplayMenu : BaseMenu
         GameplayManager.Instance.SetEndGameplayState();
     }
 
-    private void OnPlayerSpawned(uint lives)
-    {
-        SetLivesCounter(lives);
-    }
-
-    private void OnPlayerLoseLife(uint lives)
-    {
-        SetLivesCounter(lives);
-    }
-
-    private void SetLivesCounter(uint lives)
-    {
-        objectsCounter.text = lives.ToString();
-    }
-
     private void UnsubscribeFromEvents()
     {
-        if (!EventsManager.Instance) return;
-
-        EventsManager.Instance.PlayerLoseLife -= OnPlayerLoseLife;
-        EventsManager.Instance.PlayerSpawned -= OnPlayerSpawned;
+        EventsManager.Instance.GameplayStarted -= GameplayStarted;
     }
 
     private void OnDestroy()

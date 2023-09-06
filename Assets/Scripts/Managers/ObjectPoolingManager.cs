@@ -12,10 +12,10 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
 
     private void Start()
     {
-        CreateObjectsParent();
 
         foreach (var pool in pools)
         {
+            CreateObjectsParent(pool.PoolableNameType);
             for (int i = 0; i < pool.StartPoolCount; i++)
             {
                 var newObject = Instantiate(pool.PoolObjectPrefab.gameObject, _objectsParent);
@@ -27,9 +27,9 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
         }
     }
 
-    private void CreateObjectsParent()
+    private void CreateObjectsParent(string parentName)
     {
-        _objectsParent = Instantiate(new GameObject(GetType().Name).transform, GameLauncher.Instance.GamePlane.transform);
+        _objectsParent = Instantiate(new GameObject(parentName + "Parent").transform, GameLauncher.Instance.GamePlane.transform);
     }
 
     public BasePoolableController GetFromPool(string poolableType)

@@ -19,7 +19,7 @@ public class MainMenu : BaseMenu
         foreach (var level in LevelSettingsManager.Instance.LevelSettings)
         {
             var levelButton = Instantiate(levelButtonPrefab, levelButtonParent);
-            levelButton.Init(level.ObjectsCount, level.ImageColor, () => OnLevelButtonClick(levelButton, level.ObjectsCount));
+            levelButton.Init(level.ObjectsCount, level.ImageColor, () => OnLevelButtonClick(levelButton, level.LevelNumber));
         }
     }
 
@@ -35,7 +35,7 @@ public class MainMenu : BaseMenu
         startLevelButton.ToggleButton(false);
     }
 
-    private void OnLevelButtonClick(LevelButton button, uint objectsCount)
+    private void OnLevelButtonClick(LevelButton button, uint levelNumber)
     {
         if (_activeLevelButton)
         {
@@ -45,7 +45,7 @@ public class MainMenu : BaseMenu
         _activeLevelButton = button;
         _activeLevelButton.SelectButton();
 
-        LevelSettingsManager.Instance.SetLevelNumber(objectsCount);
+        LevelSettingsManager.Instance.SetLevelNumber(levelNumber);
         startLevelButton.ToggleButton(true);
     }
 

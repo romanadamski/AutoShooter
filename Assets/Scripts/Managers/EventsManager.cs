@@ -2,28 +2,28 @@
 
 public class EventsManager : BaseManager<EventsManager>
 {
-    public event Action<uint> PlayerLoseLife;
-    public void OnPlayerLoseLife(uint livesCount)
+    public event Action GameplayStarted;
+    public void OnGameplayStarted()
     {
-        PlayerLoseLife?.Invoke(livesCount);
+        GameplayStarted?.Invoke();
     }
 
-    public event Action<uint> PlayerSpawned;
-    public void OnPlayerSpawned(uint livesCount)
+    public event Action GameplayEnded;
+    public void OnGameplayEnded()
     {
-        PlayerSpawned?.Invoke(livesCount);
+        GameplayEnded?.Invoke();
     }
-    
+
     public event Action ObjectShotted;
     public void OnObjectShotted()
     {
         ObjectShotted?.Invoke();
     }
 
-    public event Action<uint> ScoreUpdated;
-    public void OnScoreUpdated(uint score)
+    public event Action<uint> ShootersCountUpdated;
+    public void OnShootersCountUpdated(uint score)
     {
-        ScoreUpdated?.Invoke(score);
+        ShootersCountUpdated?.Invoke(score);
     }
 
     public event Action BulletFired;

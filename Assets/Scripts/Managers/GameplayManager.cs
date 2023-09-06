@@ -45,9 +45,9 @@ public class GameplayManager : BaseManager<GameplayManager>
 
     public void ClearGameplay()
     {
-
         ObjectPoolingManager.Instance.ReturnAllToPools();
         DestroyAllPlayerObjects();
+        EventsManager.Instance.OnGameplayEnded();
     }
 
     private void ObjectDead()
@@ -55,29 +55,42 @@ public class GameplayManager : BaseManager<GameplayManager>
         DecrementScore();
     }
 
-    public void StartCurrentLevel()
+    private void StartCurrentLevel()
     {
         ResetScore();
         LevelSettingsManager.Instance.SetCurrentLevel();
-        //todo spawn objects
+        for (int i = 0; i < LevelSettingsManager.Instance.CurrentLevel.ObjectsCount; i++)
+        {
+            var shooter = ObjectPoolingManager.Instance.GetFromPool("Shooter");
+            //todo randomize
+            Debug.Log("pozycja: " +
+                (int)(i / Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)) +
+                ", " +
+                (int)(i % Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)));
+            shooter.transform.position = new Vector3((int)(i / Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)),
+                0,
+                (int)(i % Mathf.Sqrt(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount)));
+            shooter.gameObject.SetActive(true);
+        }
     }
 
     private void DecrementScore()
     {
         CurrentScore -= 1;
-        EventsManager.Instance.OnScoreUpdated(CurrentScore);
+        EventsManager.Instance.OnShootersCountUpdated(CurrentScore);
     }
 
     private void ResetScore()
     {
         CurrentScore = 0;
-        EventsManager.Instance.OnScoreUpdated(CurrentScore);
+        EventsManager.Instance.OnShootersCountUpdated(CurrentScore);
     }
 
     public void StartGameplay()
     {
+        StartCurrentLevel();
         ResumeGameplay();
-        //todo spawn objects
+        EventsManager.Instance.OnGameplayStarted();
     }
 
     public void SetGameplayState()

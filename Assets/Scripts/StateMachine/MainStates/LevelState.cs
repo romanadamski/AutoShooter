@@ -4,7 +4,6 @@ public class LevelState : State
 
     protected override void OnEnter()
     {
-        GameplayManager.Instance.StartCurrentLevel();
         GameplayManager.Instance.SetGameplayState();
     }
 }

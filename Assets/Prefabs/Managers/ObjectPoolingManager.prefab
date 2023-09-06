@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93bf9da5d0ccd04fa2a7207bc1c0cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pools: []
+  pools:
+  - StartPoolCount: 500
+    PoolObjectPrefab: {fileID: 7537878326447959065, guid: ee312735670a65444a1e858b9929c7df, type: 3}
+    CanGrow: 0
+    ObjectCount: 0
+    ObjectsOutsidePool: []
