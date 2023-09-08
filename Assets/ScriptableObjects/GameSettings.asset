@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e9d9ecfba8f88344bcf6e3f0ea0e615, type: 3}
-  m_Name: Level7
+  m_Script: {fileID: 11500000, guid: 6e7d5a75f0847954381407e019c9c4dc, type: 3}
+  m_Name: GameSettings
   m_EditorClassIdentifier: 
-  levelNumber: 7
-  objectsCount: 2000
-  imageColor: {r: 1, g: 0, b: 0.83413935, a: 1}
+  shooterRotationSpeed: 10
+  rotatingTimeFrequency:
+    item1: 0
+    item2: 1
+  baseBulletMovementSpeed: 0

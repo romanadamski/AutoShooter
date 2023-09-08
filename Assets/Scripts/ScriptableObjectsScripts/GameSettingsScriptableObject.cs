@@ -3,30 +3,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "ScriptableObjects/Game Settings")]
 public class GameSettingsScriptableObject : ScriptableObject
 {
-    [Header("Player settings")]
-    [SerializeField]
-    private float playerMovementSpeed;
-    public float PlayerMovementSpeed => playerMovementSpeed;
+    [Header("Shooter settings")]
 
     [SerializeField]
-    private float playerRotationSpeed;
-    public float PlayerRotationSpeed => playerRotationSpeed;
-
+    private float shooterRotationSpeed;
+    public float ShooterRotationSpeed => shooterRotationSpeed;
     [SerializeField]
-    private float playerMovementPrecision;
-    public float PlayerMovementPrecision => playerMovementPrecision;
+    private SerializableTuple<float, float> rotatingTimeFrequency;
+    public SerializableTuple<float, float> RotatingTimeFrequency => rotatingTimeFrequency;
 
     [Header("Bullet settings")]
+
     [SerializeField]
     private float baseBulletMovementSpeed;
     public float BaseBulletMovementSpeed => baseBulletMovementSpeed;
-
-    [Header("Game settings")]
-    [SerializeField]
-    private float _idleStateTime;
-    public float IdleStateTime => _idleStateTime;
-
-    [SerializeField]
-    private int _maxHighscoresSaveCount;
-    public int MaxHighscoresSaveCount => _maxHighscoresSaveCount;
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class BasePoolableController : MonoBehaviour
+public class BasePoolableController : MonoBehaviour
 {
     public string PoolableType;
 }

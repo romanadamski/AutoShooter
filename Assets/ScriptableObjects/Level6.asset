@@ -13,11 +13,5 @@ MonoBehaviour:
   m_Name: Level6
   m_EditorClassIdentifier: 
   levelNumber: 6
-  objectsCount: 3
-  imageColor: {r: 0.3962264, g: 0.104825936, b: 0, a: 1}
-  releasingFrequency:
-    item1: 0
-    item2: 0
-  speedRange:
-    item1: 0
-    item2: 0
+  objectsCount: 1000
+  imageColor: {r: 1, g: 0, b: 0.83413935, a: 1}

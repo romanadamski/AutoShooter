@@ -17,6 +17,7 @@ public class GameplayManager : BaseManager<GameplayManager>
     #endregion
 
     public uint CurrentScore { get; private set; }
+    public bool DuringGameplayState => _gameplayStateMachine.CurrentState?.GetType() == typeof(GameplayState);
 
     private void Awake()
     {

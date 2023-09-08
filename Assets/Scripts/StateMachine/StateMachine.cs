@@ -2,34 +2,34 @@
 
 public class StateMachine : MonoBehaviour
 {
-    private State _currentState;
+    public State CurrentState { get; private set; }
 
     public void SetState(State state)
     {
-        if (_currentState != null)
+        if (CurrentState != null)
         {
-            _currentState.Exit();
+            CurrentState.Exit();
         }
 
-        _currentState = state;
+        CurrentState = state;
 
-        _currentState.Enter();
+        CurrentState.Enter();
     }
 
     private void Update()
     {
-        if (_currentState != null)
+        if (CurrentState != null)
         {
-            _currentState.Update();
+            CurrentState.Update();
         }
     }
 
     public void Clear()
     {
-        if (_currentState != null)
+        if (CurrentState != null)
         {
-            _currentState.Exit();
+            CurrentState.Exit();
         }
-        _currentState = null;
+        CurrentState = null;
     }
 }

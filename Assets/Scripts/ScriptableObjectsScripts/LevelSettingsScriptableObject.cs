@@ -14,13 +14,4 @@ public class LevelSettingsScriptableObject : ScriptableObject
     [SerializeField]
     private Color imageColor;
     public Color ImageColor => imageColor;
-
-    [Header("Shooter settings")]
-    [SerializeField]
-    private SerializableTuple<float, float> releasingFrequency;
-    public SerializableTuple<float, float> ReleasingFrequency => releasingFrequency;
-
-    [SerializeField]
-    private SerializableTuple<float, float> speedRange;
-    public SerializableTuple<float, float> SpeedRange => speedRange;
 }
