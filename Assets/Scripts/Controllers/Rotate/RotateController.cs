@@ -1,19 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BaseRotateTrigger))]
+[RequireComponent(typeof(TimerRotateTrigger))]
 public class RotateController : MonoBehaviour, IUpdatable
 {
-    private BaseRotateTrigger _rotateTrigger;
+    private TimerRotateTrigger _rotateTrigger;
     private Quaternion _rotation;
 
     private void Awake()
     {
-        _rotateTrigger = GetComponent<BaseRotateTrigger>();
+        _rotateTrigger = GetComponent<TimerRotateTrigger>();
     }
 
     public void OnUpdate()
     {
-        if (!_rotateTrigger.RotateTriggerActive) return;
+        if (!_rotateTrigger.TriggerActive) return;
+        if (!gameObject.activeInHierarchy) return;
+
         _rotation = Quaternion.Lerp(
                 transform.rotation,
                 _rotateTrigger.RotationValue,
@@ -27,7 +29,7 @@ public class RotateController : MonoBehaviour, IUpdatable
         transform.rotation = _rotation;
         if (transform.rotation.Equals(_rotateTrigger.RotationValue))
         {
-            _rotateTrigger.ResetRotateTrigger();
+            _rotateTrigger.ResetTrigger();
         }
     }
 }

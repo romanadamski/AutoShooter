@@ -11,7 +11,7 @@ public class GameplayManager : BaseManager<GameplayManager>
 
     public GameplayState GameplayState { get; private set; }
     public WinState WinState { get; private set; }
-    public GameOverState GameOverMenu { get; private set; }
+    public GameOverState GameOverState { get; private set; }
     public EndGameplayState EndGameplayState { get; private set; }
 
     #endregion
@@ -35,13 +35,13 @@ public class GameplayManager : BaseManager<GameplayManager>
 
         GameplayState = new GameplayState(_gameplayStateMachine);
         WinState = new WinState(_gameplayStateMachine);
-        GameOverMenu = new GameOverState(_gameplayStateMachine);
+        GameOverState = new GameOverState(_gameplayStateMachine);
         EndGameplayState = new EndGameplayState(_gameplayStateMachine);
     }
 
     private void SubscribeToEvents()
     {
-        EventsManager.Instance.ObjectShotted += ObjectDead;
+        EventsManager.Instance.ShooterShoted += (lives, shooter) => ShooterShoted(lives, shooter);
     }
 
     public void ClearGameplay()
@@ -50,28 +50,39 @@ public class GameplayManager : BaseManager<GameplayManager>
         DestroyAllPlayerObjects();
         EventsManager.Instance.OnGameplayEnded();
     }
-
-    private void ObjectDead()
+    List<string> duplicates = new List<string>();
+    private void ShooterShoted(uint lives, GameObject shooter)
     {
-        DecrementScore();
+        if (lives == 0)
+        {
+            DecrementScore();
+            if (duplicates.Contains(shooter.name))
+            {
+                Debug.Log($"DecrementScore EXIST {CurrentScore - 1} {shooter.name} {lives}");
+            }
+            else
+            {
+                Debug.Log($"DecrementScore {CurrentScore - 1} {shooter.name} {lives}");
+                duplicates.Add(shooter.name);
+            }
+        }
     }
 
     private void StartCurrentLevel()
     {
-        ResetScore();
         LevelSettingsManager.Instance.SetCurrentLevel();
+        CurrentScore = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount;
         GameLauncher.Instance.GamePlane.SpawnGameplayObjects();
     }
 
     private void DecrementScore()
     {
-        CurrentScore -= 1;
-        EventsManager.Instance.OnShootersCountUpdated(CurrentScore);
-    }
-
-    private void ResetScore()
-    {
-        CurrentScore = 0;
+        CurrentScore--;
+        if (CurrentScore.Equals(GameSettingsManager.Instance.Settings.MinShootersCount))
+        {
+            SetGameOverState();
+        }
+        
         EventsManager.Instance.OnShootersCountUpdated(CurrentScore);
     }
 
@@ -85,6 +96,11 @@ public class GameplayManager : BaseManager<GameplayManager>
     public void SetGameplayState()
     {
         _gameplayStateMachine.SetState(GameplayState);
+    }
+
+    public void SetGameOverState()
+    {
+        _gameplayStateMachine.SetState(GameOverState);
     }
 
     public void SetEndGameplayState()
@@ -115,17 +131,5 @@ public class GameplayManager : BaseManager<GameplayManager>
     public void ResumeGameplay()
     {
         Time.timeScale = 1;
-    }
-
-    private void UnsubscribeFromEvents()
-    {
-        if (!EventsManager.Instance) return;
-
-        EventsManager.Instance.ObjectShotted -= ObjectDead;
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeFromEvents();
     }
 }

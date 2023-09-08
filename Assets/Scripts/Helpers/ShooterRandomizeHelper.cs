@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class ShooterRandomizeHelper
+public static class ShooterRandomizeHelper
 {
-    public float GetRandomTimeFrequency()
+    public static float GetRandomTimeFrequency()
     {
         return Random.Range(
             GameSettingsManager.Instance.Settings.RotatingTimeFrequency.Item1,

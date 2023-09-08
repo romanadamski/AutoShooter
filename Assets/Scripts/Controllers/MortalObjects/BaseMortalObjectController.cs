@@ -25,7 +25,7 @@ public abstract class BaseMortalObjectController : MonoBehaviour
         SubscribeToEvents();
     }
 
-    private void SubscribeToEvents()
+    protected virtual void SubscribeToEvents()
     {
         _collisionController.CollisionEnter += CollisionEnter;
         _collisionController.CollisionExit += CollisionExit;
@@ -75,18 +75,5 @@ public abstract class BaseMortalObjectController : MonoBehaviour
         {
             LivesCount--;
         }
-    }
-
-    private void UnsubscribeFromEvents()
-    {
-        _collisionController.CollisionEnter -= CollisionEnter;
-        _collisionController.CollisionExit -= CollisionExit;
-        _collisionController.TriggerEnter -= TriggerEnter;
-        _collisionController.TriggerExit -= TriggerExit;
-    }
-
-    private void OnDestroy()
-    {
-        UnsubscribeFromEvents();
     }
 }

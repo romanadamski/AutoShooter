@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class EventsManager : BaseManager<EventsManager>
 {
@@ -14,10 +15,10 @@ public class EventsManager : BaseManager<EventsManager>
         GameplayEnded?.Invoke();
     }
 
-    public event Action ObjectShotted;
-    public void OnObjectShotted()
+    public event Action<uint, GameObject> ShooterShoted;
+    public void OnShooterShoted(uint lives, GameObject shooter)
     {
-        ObjectShotted?.Invoke();
+        ShooterShoted?.Invoke(lives, shooter);
     }
 
     public event Action<uint> ShootersCountUpdated;

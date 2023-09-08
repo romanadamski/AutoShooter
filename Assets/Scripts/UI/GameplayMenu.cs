@@ -20,11 +20,22 @@ public class GameplayMenu : BaseMenu
         if (!EventsManager.Instance) return;
 
         EventsManager.Instance.GameplayStarted += GameplayStarted;
+        EventsManager.Instance.ShootersCountUpdated += ShootersCountUpdated; ;
+    }
+
+    private void ShootersCountUpdated(uint shootersCounter)
+    {
+        SetScore(shootersCounter);
     }
 
     private void GameplayStarted()
     {
-        objectsCounter.text = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount.ToString();
+        SetScore(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount);
+    }
+
+    private void SetScore(uint shootersCount)
+    {
+        objectsCounter.text = shootersCount.ToString();
     }
 
     private void OnGoToMainMenuClick()
