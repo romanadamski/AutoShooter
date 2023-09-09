@@ -13,7 +13,8 @@ public class BulletMovementController : MonoBehaviour, IUpdatable
 
     public void StartMovementFrom(Vector3 position, Quaternion rotation)
     {
-        transform.SetPositionAndRotation(position + transform.up * _resizableController.Bounds.size.y, rotation);
+        transform.rotation = rotation;
+        transform.position = position + transform.up * _resizableController.Bounds.size.z / 2;
         gameObject.SetActive(true);
 
         _rigidbody.velocity = transform.up * GameSettingsManager.Instance.Settings.BulletMovementSpeed;

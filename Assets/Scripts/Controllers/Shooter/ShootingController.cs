@@ -13,7 +13,7 @@ public class ShootingController : TimerTriggerController, IUpdatable
         if (!gameObject.activeInHierarchy) return;
         if (!shotingPoint)
         {
-            Debug.LogError($"Shoting point of {name} is not set in inspector!");
+            Debug.LogError($"Shoting point of {name} is not set in the inspector!");
             return;
         }
 
