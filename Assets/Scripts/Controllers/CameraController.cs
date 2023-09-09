@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Camera))]
 public class CameraController : MonoBehaviour
@@ -42,6 +41,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         if (!_isMovementActive) return;
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (Input.GetMouseButton(0))
         {

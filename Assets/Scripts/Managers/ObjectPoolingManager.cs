@@ -29,7 +29,7 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
         poolableObject.name = poolableObject.name.Replace("(Clone)", $"{poolableObject.GetInstanceID()}");
     }
 
-private Transform CreateObjectsParent(string parentName)
+    private Transform CreateObjectsParent(string parentName)
         => Instantiate(new GameObject(parentName + "Parent").transform, GameLauncher.Instance.GamePlane.transform);
 
     public BasePoolableController GetFromPool(string poolableType)
@@ -81,7 +81,5 @@ private Transform CreateObjectsParent(string parentName)
     }
 
     private Pool GetPoolByPoolableNameType(string poolableType)
-    {
-        return pools.FirstOrDefault(x => x.PoolableNameType.Equals(poolableType));
-    }
+        => pools.FirstOrDefault(x => x.PoolableNameType.Equals(poolableType));
 }

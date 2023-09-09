@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
@@ -8,17 +6,64 @@ public class ResizableController : MonoBehaviour
     private float _scalePerSizeX;
     private float _scalePerSizeY;
     private float _scalePerSizeZ;
-
-    public Renderer Renderer { get; private set; }
-    public Bounds Bounds => Renderer.bounds;
+    
+    public Bounds Bounds { get; private set; }
 
     private void Awake()
     {
-        Renderer = GetComponent<Renderer>();
+        SetBounds();
 
-        _scalePerSizeX = transform.localScale.x / Renderer.bounds.size.x;
-        _scalePerSizeY = transform.localScale.y / Renderer.bounds.size.y;
-        _scalePerSizeZ = transform.localScale.z / Renderer.bounds.size.z;
+        _scalePerSizeX = transform.localScale.x / Bounds.size.x;
+        _scalePerSizeY = transform.localScale.y / Bounds.size.y;
+        _scalePerSizeZ = transform.localScale.z / Bounds.size.z;
+    }
+
+    private void SetBounds()
+    {
+        var renderers = GetComponentsInChildren<Renderer>();
+
+        var maxX = float.NegativeInfinity;
+        var maxY = float.NegativeInfinity;
+        var maxZ = float.NegativeInfinity;
+
+        var minX = float.PositiveInfinity;
+        var minY = float.PositiveInfinity;
+        var minZ = float.PositiveInfinity;
+
+        foreach (var renderer in renderers)
+        {
+            if (maxX < renderer.bounds.max.x)
+            {
+                maxX = renderer.bounds.max.x;
+            }
+            if (maxY < renderer.bounds.max.y)
+            {
+                maxY = renderer.bounds.max.y;
+            }
+            if (maxZ < renderer.bounds.max.z)
+            {
+                maxZ = renderer.bounds.max.z;
+            }
+
+            if (minX > renderer.bounds.min.x)
+            {
+                minX = renderer.bounds.min.x;
+            }
+            if (minY > renderer.bounds.min.y)
+            {
+                minY = renderer.bounds.min.y;
+            }
+            if (minZ > renderer.bounds.min.z)
+            {
+                minZ = renderer.bounds.min.z;
+            }
+        }
+
+        Bounds = new Bounds
+        {
+            max = new Vector3(maxX, maxY, maxZ),
+            min = new Vector3(minX, minY, minZ),
+        };
     }
 
     public void SetSize(Vector3 size)
@@ -27,5 +72,7 @@ public class ResizableController : MonoBehaviour
             _scalePerSizeX * size.x,
             _scalePerSizeY * size.y,
             _scalePerSizeZ * size.z);
+
+        SetBounds();
     }
 }

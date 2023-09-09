@@ -15,7 +15,7 @@ public class BulletMovementManager : BaseManager<BulletMovementManager>
         bulletMovementControllers.Remove(bullet);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         bulletMovementControllers.ToList().ForEach(bullet => bullet.OnUpdate());
     }

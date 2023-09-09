@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MainGamePlaneController : BaseGamePlane
@@ -7,17 +8,29 @@ public class MainGamePlaneController : BaseGamePlane
     private ResizableController ground;
 
     private List<IUpdatable> _rotateShooters = new List<IUpdatable>();
+    private uint _currentUniquePositionSearchAttempt;
+    private Vector3 _shooterSize;
+
+    private const uint UNIQUE_POSITION_SEARCH_MAX_ATTEMPTS = 50;
 
     public override Bounds GameBounds => ground.Bounds;
 
     private void Start()
     {
         SubscribeToEvents();
+        GetShooterSize();
     }
 
     private void SubscribeToEvents()
     {
         EventsManager.Instance.ShooterShoted += ShooterShoted;
+    }
+
+    private void GetShooterSize()
+    {
+        var tempShooter = ObjectPoolingManager.Instance.GetFromPool(GameObjectTagsConstants.SHOOTER);
+        _shooterSize = tempShooter.GetComponent<ResizableController>().Bounds.size;
+        ObjectPoolingManager.Instance.ReturnToPool(tempShooter);
     }
 
     private void ShooterShoted(uint lives, GameObject shooter)
@@ -35,8 +48,10 @@ public class MainGamePlaneController : BaseGamePlane
         var shooterCount = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount;
         if (shooterCount == 0) return;
 
-        ground.SetSize(new Vector3(Mathf.Pow(shooterCount, 1f), 0 , Mathf.Pow(shooterCount, 1f)));
         _rotateShooters.Clear();
+
+
+        ground.SetSize(new Vector3(_shooterSize.z * shooterCount, 0, _shooterSize.z * shooterCount));
 
         for (int i = 0; i < shooterCount; i++)
         {
@@ -47,17 +62,42 @@ public class MainGamePlaneController : BaseGamePlane
         }
     }
 
-    //todo do not touch each other
     private void SpawnShooterInRandomPosition(GameObject shooter)
     {
-        var resizebleShooter = shooter.GetComponent<ResizableController>();
-        var x = Random.Range(ground.Bounds.min.x + resizebleShooter.Bounds.size.x / 2,
-            ground.Bounds.max.x - resizebleShooter.Bounds.size.x / 2);
-        var z = Random.Range(ground.Bounds.min.z + resizebleShooter.Bounds.size.z / 2,
-            ground.Bounds.max.z - resizebleShooter.Bounds.size.z / 2);
+        _currentUniquePositionSearchAttempt = 0;
 
-        shooter.transform.position = new Vector3(x, resizebleShooter.Bounds.size.y / 2, z);
+        var position = GetRandomUniquePosition();
+
+        shooter.transform.position = position;
         shooter.gameObject.SetActive(true);
+    }
+
+    private Vector3 GetRandomUniquePosition()
+    {
+        var x = Random.Range(ground.Bounds.min.x + _shooterSize.x / 2,
+            ground.Bounds.max.x - _shooterSize.x / 2);
+        var z = Random.Range(ground.Bounds.min.z + _shooterSize.z / 2,
+            ground.Bounds.max.z - _shooterSize.z / 2);
+
+        var position = new Vector3(x, _shooterSize.y / 2, z);
+
+        _currentUniquePositionSearchAttempt++;
+        if (_currentUniquePositionSearchAttempt < UNIQUE_POSITION_SEARCH_MAX_ATTEMPTS)
+        {
+            var colliders = Physics.OverlapSphere(position, _shooterSize.z).Where(x => x.tag.Equals(GameObjectTagsConstants.SHOOTER));
+
+            if (colliders.Any())
+            {
+                position = GetRandomUniquePosition();
+            }
+        }
+        else
+        {
+            Debug.Log($"Too many attemps!");
+            return position;
+        }
+
+        return position;
     }
 
     private void Update()

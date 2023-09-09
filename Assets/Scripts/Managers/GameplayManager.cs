@@ -10,7 +10,6 @@ public class GameplayManager : BaseManager<GameplayManager>
     private StateMachine _gameplayStateMachine;
 
     public GameplayState GameplayState { get; private set; }
-    public WinState WinState { get; private set; }
     public GameOverState GameOverState { get; private set; }
     public EndGameplayState EndGameplayState { get; private set; }
 
@@ -34,7 +33,6 @@ public class GameplayManager : BaseManager<GameplayManager>
         _gameplayStateMachine = gameObject.AddComponent<StateMachine>();
 
         GameplayState = new GameplayState(_gameplayStateMachine);
-        WinState = new WinState(_gameplayStateMachine);
         GameOverState = new GameOverState(_gameplayStateMachine);
         EndGameplayState = new EndGameplayState(_gameplayStateMachine);
     }
