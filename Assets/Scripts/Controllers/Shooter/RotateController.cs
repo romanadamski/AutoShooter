@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class RotateController : BaseTriggerController, IUpdatable
+public class RotateController : TimerTriggerController, IUpdatable
 {
     private Quaternion _rotation;
 
-    protected override float Interval => ShooterRandomizeHelper.GetRandomTimeFrequency();
+    protected override float Interval => GetRandomTimeFrequency();
 
     public Quaternion RotationValue { get; private set; }
 
@@ -33,5 +33,12 @@ public class RotateController : BaseTriggerController, IUpdatable
         {
             ResetTrigger();
         }
+    }
+
+    private float GetRandomTimeFrequency()
+    {
+        return Random.Range(
+            GameSettingsManager.Instance.Settings.RotatingTimeFrequency.Item1,
+            GameSettingsManager.Instance.Settings.RotatingTimeFrequency.Item2);
     }
 }

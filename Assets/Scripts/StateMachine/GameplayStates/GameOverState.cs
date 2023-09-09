@@ -2,9 +2,7 @@ public class GameOverState : State
 {
     private GameOverMenu _gameOverMenu;
 
-    public GameOverState(StateMachine stateMachine) : base(stateMachine)
-    {
-    }
+    public GameOverState(StateMachine stateMachine) : base(stateMachine) { }
 
     protected override void OnEnter()
     {

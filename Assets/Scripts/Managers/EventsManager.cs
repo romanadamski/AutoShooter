@@ -26,10 +26,4 @@ public class EventsManager : BaseManager<EventsManager>
     {
         ShootersCountUpdated?.Invoke(score);
     }
-
-    public event Action BulletFired;
-    public void OnBulletFired()
-    {
-        BulletFired?.Invoke();
-    }
 }

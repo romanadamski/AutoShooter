@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5731097664778191326}
   - component: {fileID: 7423463807778767757}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BulletMovementManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ Transform:
   - {fileID: 8267744367590762534}
   - {fileID: 5731097664778191326}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7036549252057731058
 GameObject:

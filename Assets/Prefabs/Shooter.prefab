@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5865394554931261671}
   - component: {fileID: 6056951500578737472}
   - component: {fileID: 1463131685535788002}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Riffle
   m_TagString: Shooter
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7099130185065740963}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: ShotingPoint
   m_TagString: Shooter
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: -1172380240849107943}
   - component: {fileID: 3070134734047084815}
   - component: {fileID: 2600416992994939258}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Shooter
   m_TagString: Shooter
   m_Icon: {fileID: 0}

@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class TimerManager : BaseManager<TimerManager>
 {
@@ -21,7 +18,7 @@ public class TimerManager : BaseManager<TimerManager>
 
     private void GameplayEnded()
     {
-        _transientTimerControllers.ForEach(timer => timer.StopCounting());
+        _transientTimerControllers.ForEach(timer => timer.Stop());
         _transientTimerControllers.Clear();
     }
 

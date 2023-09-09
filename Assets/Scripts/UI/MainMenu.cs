@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainMenu : BaseMenu
 {
@@ -14,12 +13,12 @@ public class MainMenu : BaseMenu
 
     private void Start()
     {
-        startLevelButton.Init(OnPlayClick);
+        startLevelButton.Init(OnStartButtonClick);
 
         foreach (var level in LevelSettingsManager.Instance.LevelSettings)
         {
             var levelButton = Instantiate(levelButtonPrefab, levelButtonParent);
-            levelButton.Init(level.ObjectsCount, level.ImageColor, () => OnLevelButtonClick(levelButton, level.LevelNumber));
+            levelButton.Init(level.ShootersCount, level.ImageColor, () => OnLevelButtonClick(levelButton, level.LevelNumber));
         }
     }
 
@@ -29,7 +28,7 @@ public class MainMenu : BaseMenu
 
         if (_activeLevelButton)
         {
-            _activeLevelButton?.DeselectButton();
+            _activeLevelButton.DeselectButton();
             _activeLevelButton = null;
         }
         startLevelButton.ToggleButton(false);
@@ -49,7 +48,7 @@ public class MainMenu : BaseMenu
         startLevelButton.ToggleButton(true);
     }
 
-    private void OnPlayClick()
+    private void OnStartButtonClick()
     {
         GameManager.Instance.SetLevelState();
     }

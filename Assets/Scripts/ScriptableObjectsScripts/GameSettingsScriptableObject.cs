@@ -14,12 +14,15 @@ public class GameSettingsScriptableObject : ScriptableObject
     [SerializeField]
     private float shooterSpawnLatency;
     public float ShooterSpawnLatency => shooterSpawnLatency;
+
     [SerializeField]
     private uint shooterLives;
     public uint ShooterLives => shooterLives;
+
     [SerializeField]
     private float shooterRotationSpeed;
     public float ShooterRotationSpeed => shooterRotationSpeed;
+
     [SerializeField]
     private SerializableTuple<float, float> rotatingTimeFrequency;
     public SerializableTuple<float, float> RotatingTimeFrequency => rotatingTimeFrequency;

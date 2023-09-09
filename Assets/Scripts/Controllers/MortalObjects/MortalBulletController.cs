@@ -1,12 +1,7 @@
 ﻿using UnityEngine;
 
-public class MortalBulletController : BaseMortalObjectController
+public class MortalBulletController : BaseMortalShooterController
 {
-    protected override string[] GetEnemies()
-    {
-        return new string[] { GameObjectTagsConstants.SHOOTER };
-    }
-
     protected override void OnTriggerWithEnemyEnter(Collider collider)
     {
         ObjectPoolingManager.Instance.ReturnToPool(gameObject.GetComponent<BasePoolableController>());

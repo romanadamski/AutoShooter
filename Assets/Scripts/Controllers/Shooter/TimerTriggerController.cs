@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseTriggerController : MonoBehaviour
+public abstract class TimerTriggerController : MonoBehaviour
 {
     private TimerController _timerController;
-    public bool TriggerActive { get; private set; }
 
     protected abstract float Interval { get; }
+
+    public bool TriggerActive { get; private set; }
 
     private void Awake()
     {
@@ -39,12 +38,13 @@ public abstract class BaseTriggerController : MonoBehaviour
         {
             _timerController = new TimerController(TimerElapsed, TimerType.Cached);
         }
+
         _timerController.SetInterval(Interval);
-        _timerController.StartCounting();
+        _timerController.Start();
     }
 
     private void OnDisable()
     {
-        _timerController.StopCounting();
+        _timerController.Stop();
     }
 }

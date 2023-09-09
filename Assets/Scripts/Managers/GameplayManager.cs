@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GameplayManager : BaseManager<GameplayManager>
 {
-    private List<GameObject> _playerObjects = new List<GameObject>();
-
     #region States
 
     private StateMachine _gameplayStateMachine;
@@ -39,17 +37,16 @@ public class GameplayManager : BaseManager<GameplayManager>
 
     private void SubscribeToEvents()
     {
-        EventsManager.Instance.ShooterShoted += (lives, shooter) => ShooterShoted(lives, shooter);
+        EventsManager.Instance.ShooterShoted += (lives, shooter) => ShooterShoted(lives);
     }
 
     public void ClearGameplay()
     {
         ObjectPoolingManager.Instance.ReturnAllToPools();
-        DestroyAllPlayerObjects();
         EventsManager.Instance.OnGameplayEnded();
     }
 
-    private void ShooterShoted(uint lives, GameObject shooter)
+    private void ShooterShoted(uint lives)
     {
         if (lives == 0)
         {
@@ -60,7 +57,7 @@ public class GameplayManager : BaseManager<GameplayManager>
     private void StartCurrentLevel()
     {
         LevelSettingsManager.Instance.SetCurrentLevel();
-        CurrentScore = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount;
+        CurrentScore = LevelSettingsManager.Instance.CurrentLevel.ShootersCount;
         GameLauncher.Instance.GamePlane.SpawnGameplayObjects();
     }
 
@@ -78,7 +75,6 @@ public class GameplayManager : BaseManager<GameplayManager>
     public void StartGameplay()
     {
         StartCurrentLevel();
-        ResumeGameplay();
         EventsManager.Instance.OnGameplayStarted();
     }
 
@@ -101,24 +97,5 @@ public class GameplayManager : BaseManager<GameplayManager>
     {
         ClearGameplay();
         _gameplayStateMachine.Clear();
-    }
-
-    public void DestroyAllPlayerObjects()
-    {
-        foreach (var playerObject in _playerObjects)
-        {
-            Destroy(playerObject);
-        }
-        _playerObjects.Clear();
-    }
-
-    public void PauseGameplay()
-    {
-        Time.timeScale = 0;
-    }
-
-    public void ResumeGameplay()
-    {
-        Time.timeScale = 1;
     }
 }

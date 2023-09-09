@@ -2,7 +2,8 @@ public class GameManager : BaseManager<GameManager>
 {
     #region States
 
-    private StateMachine gameStateMachine;
+    private StateMachine _gameStateMachine;
+
     public MainMenuState MainMenuState;
     public LevelState LevelState;
 
@@ -16,19 +17,19 @@ public class GameManager : BaseManager<GameManager>
 
     public void GoToMainMenu()
     {
-        gameStateMachine.SetState(MainMenuState);
+        _gameStateMachine.SetState(MainMenuState);
     }
 
     private void InitStates()
     {
-        gameStateMachine = gameObject.AddComponent<StateMachine>();
+        _gameStateMachine = gameObject.AddComponent<StateMachine>();
 
-        MainMenuState = new MainMenuState(gameStateMachine);
-        LevelState = new LevelState(gameStateMachine);
+        MainMenuState = new MainMenuState(_gameStateMachine);
+        LevelState = new LevelState(_gameStateMachine);
     }
 
     public void SetLevelState()
     {
-        gameStateMachine.SetState(LevelState);
+        _gameStateMachine.SetState(LevelState);
     }
 }

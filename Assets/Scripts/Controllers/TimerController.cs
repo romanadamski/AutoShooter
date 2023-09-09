@@ -34,7 +34,7 @@ public class TimerController : IUpdatable
         }
         else
         {
-            StopCounting();
+            Stop();
             OnTimerElapsed();
         }
     }
@@ -54,20 +54,20 @@ public class TimerController : IUpdatable
                 break;
             case TimerType.Cached:
                 _intervalCounting = _interval;
-                StartCounting();
+                Start();
                 break;
             default:
                 break;
         }
     }
 
-    public void StartCounting()
+    public void Start()
     {
         _intervalCounting = _interval;
         _counting = true;
     }
 
-    public void StopCounting() => _counting = false;
+    public void Stop() => _counting = false;
 
     public void SetInterval(float interval)
     {

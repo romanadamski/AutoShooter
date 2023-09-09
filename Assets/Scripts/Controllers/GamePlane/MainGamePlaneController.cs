@@ -7,7 +7,7 @@ public class MainGamePlaneController : BaseGamePlane
     [SerializeField]
     private ResizableController ground;
 
-    private List<IUpdatable> _rotateShooters = new List<IUpdatable>();
+    private readonly List<IUpdatable> _rotateShooters = new ();
     private uint _currentUniquePositionSearchAttempt;
     private Vector3 _shooterSize;
 
@@ -39,17 +39,16 @@ public class MainGamePlaneController : BaseGamePlane
         {
             var timer = new TimerController(() => SpawnShooterInRandomPosition(shooter), TimerType.Transient);
             timer.SetInterval(GameSettingsManager.Instance.Settings.ShooterSpawnLatency);
-            timer.StartCounting();
+            timer.Start();
         }
     }
 
     public override void SpawnGameplayObjects()
     {
-        var shooterCount = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount;
+        var shooterCount = LevelSettingsManager.Instance.CurrentLevel.ShootersCount;
         if (shooterCount == 0) return;
 
         _rotateShooters.Clear();
-
 
         ground.SetSize(new Vector3(_shooterSize.z * shooterCount, 0, _shooterSize.z * shooterCount));
 
@@ -69,7 +68,7 @@ public class MainGamePlaneController : BaseGamePlane
         var position = GetRandomUniquePosition();
 
         shooter.transform.position = position;
-        shooter.gameObject.SetActive(true);
+        shooter.SetActive(true);
     }
 
     private Vector3 GetRandomUniquePosition()
@@ -84,7 +83,7 @@ public class MainGamePlaneController : BaseGamePlane
         _currentUniquePositionSearchAttempt++;
         if (_currentUniquePositionSearchAttempt < UNIQUE_POSITION_SEARCH_MAX_ATTEMPTS)
         {
-            var colliders = Physics.OverlapSphere(position, _shooterSize.z).Where(x => x.tag.Equals(GameObjectTagsConstants.SHOOTER));
+            var colliders = Physics.OverlapSphere(position, _shooterSize.z).Where(x => x.CompareTag(GameObjectTagsConstants.SHOOTER));
 
             if (colliders.Any())
             {
@@ -93,7 +92,8 @@ public class MainGamePlaneController : BaseGamePlane
         }
         else
         {
-            Debug.Log($"Too many attemps!");
+            Debug.LogError($"Too many unique position search attemps!" +
+                $"Probably game plane is too small for {LevelSettingsManager.Instance.CurrentLevel.ShootersCount} objects.");
             return position;
         }
 

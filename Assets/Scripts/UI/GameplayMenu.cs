@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GameplayMenu : BaseMenu
 {
     [SerializeField]
-    private TextMeshProUGUI objectsCounter;
+    private TextMeshProUGUI shooterCounter;
     [SerializeField]
     private Button menuButton;
 
@@ -20,7 +20,7 @@ public class GameplayMenu : BaseMenu
         if (!EventsManager.Instance) return;
 
         EventsManager.Instance.GameplayStarted += GameplayStarted;
-        EventsManager.Instance.ShootersCountUpdated += ShootersCountUpdated; ;
+        EventsManager.Instance.ShootersCountUpdated += ShootersCountUpdated;
     }
 
     private void ShootersCountUpdated(uint shootersCounter)
@@ -30,12 +30,12 @@ public class GameplayMenu : BaseMenu
 
     private void GameplayStarted()
     {
-        SetScore(LevelSettingsManager.Instance.CurrentLevel.ObjectsCount);
+        SetScore(LevelSettingsManager.Instance.CurrentLevel.ShootersCount);
     }
 
     private void SetScore(uint shootersCount)
     {
-        objectsCounter.text = shootersCount.ToString();
+        shooterCounter.text = shootersCount.ToString();
     }
 
     private void OnGoToMainMenuClick()

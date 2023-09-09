@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShootingController : BaseTriggerController, IUpdatable
+public class ShootingController : TimerTriggerController, IUpdatable
 {
     [SerializeField]
     private Transform shotingPoint;

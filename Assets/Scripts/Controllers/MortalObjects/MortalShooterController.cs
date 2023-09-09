@@ -1,12 +1,7 @@
-﻿using System;
-using UnityEngine;
-public class MortalShooterController : BaseMortalObjectController
-{
-    protected override string[] GetEnemies()
-    {
-        return new string[] { GameObjectTagsConstants.BULLET };
-    }
+﻿using UnityEngine;
 
+public class MortalShooterController : BaseMortalShooterController
+{
     protected override void SubscribeToEvents()
     {
         base.SubscribeToEvents();
@@ -31,6 +26,7 @@ public class MortalShooterController : BaseMortalObjectController
         {
             ObjectPoolingManager.Instance.ReturnToPool(gameObject.GetComponent<BasePoolableController>());
         }
+
         EventsManager.Instance.OnShooterShoted(LivesCount, gameObject);
     }
 }

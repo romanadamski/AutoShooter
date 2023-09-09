@@ -6,7 +6,6 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
 {
     [SerializeField]
     private List<Pool> pools = new List<Pool>();
-    public List<Pool> Pools => pools;
 
     private void Start()
     {
