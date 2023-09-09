@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MortalShooterController : BaseMortalShooterController
+public class MortalShooterController : BaseMortalObjectController
 {
     protected override void SubscribeToEvents()
     {

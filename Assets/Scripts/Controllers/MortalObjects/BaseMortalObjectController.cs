@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(BaseCollisionController))]
-public abstract class BaseMortalShooterController : MonoBehaviour
+public abstract class BaseMortalObjectController : MonoBehaviour
 {
     private BaseCollisionController _collisionController;
 

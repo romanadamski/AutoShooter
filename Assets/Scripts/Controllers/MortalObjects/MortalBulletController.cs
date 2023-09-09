@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MortalBulletController : BaseMortalShooterController
+public class MortalBulletController : BaseMortalObjectController
 {
     protected override void OnTriggerWithEnemyEnter(Collider collider)
     {
