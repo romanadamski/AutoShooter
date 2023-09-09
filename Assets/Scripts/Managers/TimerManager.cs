@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,22 @@ public class TimerManager : BaseManager<TimerManager>
 {
     private List<TimerController> _cachedTimerControllers = new List<TimerController>();
     private List<TimerController> _transientTimerControllers = new List<TimerController>();
+
+    private void Start()
+    {
+        SubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
+        EventsManager.Instance.GameplayEnded += GameplayEnded;
+    }
+
+    private void GameplayEnded()
+    {
+        _transientTimerControllers.ForEach(timer => timer.StopCounting());
+        _transientTimerControllers.Clear();
+    }
 
     public void AddTimer(TimerController timer)
     {

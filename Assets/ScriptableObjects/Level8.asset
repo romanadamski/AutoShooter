@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level8
   m_EditorClassIdentifier: 
   levelNumber: 8
-  objectsCount: 5
+  objectsCount: 2000
   imageColor: {r: 0, g: 0, b: 0, a: 1}

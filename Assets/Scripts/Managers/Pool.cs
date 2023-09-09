@@ -9,7 +9,7 @@ public class Pool
     public int StartPoolCount;
     public BasePoolableController PoolObjectPrefab;
     public bool CanGrow;
-    public Queue<GameObject> PooledObjects = new Queue<GameObject>();
+    public Queue<BasePoolableController> PooledObjects = new Queue<BasePoolableController>();
 
     [HideInInspector]
     public int ObjectCount;
@@ -19,7 +19,7 @@ public class Pool
     /// <summary>
     /// Type choosen in prefab from Poolable type dropdown
     /// </summary>
-    public string PoolableNameType => PoolObjectPrefab.GetComponent<BasePoolableController>().PoolableType;
+    public string PoolableNameType => PoolObjectPrefab.PoolableType;
 
     [HideInInspector]
     public List<BasePoolableController> ObjectsOutsidePool = new List<BasePoolableController>();
@@ -35,10 +35,10 @@ public class Pool
 
     public void ReturnToPool(BasePoolableController objectToReturn)
     {
-        if (!PooledObjects.Contains(objectToReturn.gameObject))
+        if (!PooledObjects.Contains(objectToReturn))
         {
             objectToReturn.gameObject.SetActive(false);
-            PooledObjects.Enqueue(objectToReturn.gameObject);
+            PooledObjects.Enqueue(objectToReturn);
             objectToReturn.OnReturnToPool();
         }
     }

@@ -18,7 +18,7 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
                 var newObject = Instantiate(pool.PoolObjectPrefab.gameObject, pool.Parent);
                 newObject.gameObject.SetActive(false);
                 SetPoolableObjectName(newObject);
-                pool.PooledObjects.Enqueue(newObject);
+                pool.PooledObjects.Enqueue(newObject.GetComponent<BasePoolableController>());
                 pool.ObjectCount++;
             }
         }
@@ -42,7 +42,7 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
         }
         if (pool.PooledObjects.Count > 0)
         {
-            var newObject = pool.PooledObjects.Dequeue().GetComponent<BasePoolableController>();
+            var newObject = pool.PooledObjects.Dequeue();
             pool.ObjectsOutsidePool.Add(newObject);
             return newObject;
         }
@@ -53,7 +53,7 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
                 pool.ObjectCount++;
                 var newObject = Instantiate(pool.PoolObjectPrefab, pool.Parent);
                 SetPoolableObjectName(newObject.gameObject);
-                pool.ObjectsOutsidePool.Add(newObject.GetComponent<BasePoolableController>());
+                pool.ObjectsOutsidePool.Add(newObject);
                 return newObject;
             }
             else

@@ -18,7 +18,7 @@ public class MainGamePlaneController : BaseGamePlane
     private void Start()
     {
         SubscribeToEvents();
-        GetShooterSize();
+        SetShooterSize();
     }
 
     private void SubscribeToEvents()
@@ -26,7 +26,7 @@ public class MainGamePlaneController : BaseGamePlane
         EventsManager.Instance.ShooterShoted += ShooterShoted;
     }
 
-    private void GetShooterSize()
+    private void SetShooterSize()
     {
         var tempShooter = ObjectPoolingManager.Instance.GetFromPool(GameObjectTagsConstants.SHOOTER);
         _shooterSize = tempShooter.GetComponent<ResizableController>().Bounds.size;

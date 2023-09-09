@@ -3,10 +3,12 @@ using UnityEngine;
 public class BulletMovementController : MonoBehaviour, IUpdatable
 {
     private ResizableController _resizableController;
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
         _resizableController = GetComponent<ResizableController>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     public void StartMovementFrom(Vector3 position, Quaternion rotation)
@@ -14,7 +16,8 @@ public class BulletMovementController : MonoBehaviour, IUpdatable
         transform.rotation = rotation;
         transform.position = position + transform.up * _resizableController.Bounds.size.y;
         gameObject.SetActive(true);
-        GetComponent<Rigidbody>().AddForce(transform.up * GameSettingsManager.Instance.Settings.BulletMovementSpeed);
+
+        _rigidbody.velocity = transform.up * GameSettingsManager.Instance.Settings.BulletMovementSpeed;
 
         BulletMovementManager.Instance.AddBullet(this);
     }

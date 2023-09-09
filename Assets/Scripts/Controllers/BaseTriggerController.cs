@@ -35,6 +35,10 @@ public abstract class BaseTriggerController : MonoBehaviour
 
     private void StartCounting()
     {
+        if (_timerController == null)
+        {
+            _timerController = new TimerController(TimerElapsed, TimerType.Cached);
+        }
         _timerController.SetInterval(Interval);
         _timerController.StartCounting();
     }

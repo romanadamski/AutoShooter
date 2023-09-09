@@ -1,24 +1,26 @@
 using UnityEngine;
 
-[RequireComponent(typeof(TimerRotateTrigger))]
-public class RotateController : MonoBehaviour, IUpdatable
+public class RotateController : BaseTriggerController, IUpdatable
 {
-    private TimerRotateTrigger _rotateTrigger;
     private Quaternion _rotation;
 
-    private void Awake()
+    protected override float Interval => ShooterRandomizeHelper.GetRandomTimeFrequency();
+
+    public Quaternion RotationValue { get; private set; }
+
+    protected override void OnTimerElapsed()
     {
-        _rotateTrigger = GetComponent<TimerRotateTrigger>();
+        RotationValue = Quaternion.Euler(0, Random.Range(0, 360), 0);
     }
 
     public void OnUpdate()
     {
-        if (!_rotateTrigger.TriggerActive) return;
+        if (!TriggerActive) return;
         if (!gameObject.activeInHierarchy) return;
 
         _rotation = Quaternion.Lerp(
                 transform.rotation,
-                _rotateTrigger.RotationValue,
+                RotationValue,
                 Time.deltaTime * GameSettingsManager.Instance.Settings.ShooterRotationSpeed);
 
         DoRotate();
@@ -27,9 +29,9 @@ public class RotateController : MonoBehaviour, IUpdatable
     private void DoRotate()
     {
         transform.rotation = _rotation;
-        if (transform.rotation.Equals(_rotateTrigger.RotationValue))
+        if (transform.rotation.Equals(RotationValue))
         {
-            _rotateTrigger.ResetTrigger();
+            ResetTrigger();
         }
     }
 }

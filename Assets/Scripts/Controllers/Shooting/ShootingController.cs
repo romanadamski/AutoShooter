@@ -1,20 +1,15 @@
 using UnityEngine;
 
-[RequireComponent(typeof(TimeShootingTrigger))]
-public class ShootingController : MonoBehaviour, IUpdatable
+public class ShootingController : BaseTriggerController, IUpdatable
 {
     [SerializeField]
     private Transform shotingPoint;
-    private TimeShootingTrigger _shootingTrigger;
 
-    private void Awake()
-    {
-        _shootingTrigger = GetComponent<TimeShootingTrigger>();
-    }
+    protected override float Interval => 1.0f;
 
     public void OnUpdate()
     {
-        if (!_shootingTrigger.TriggerActive) return;
+        if (!TriggerActive) return;
         if (!gameObject.activeInHierarchy) return;
         if (!shotingPoint)
         {
@@ -26,6 +21,6 @@ public class ShootingController : MonoBehaviour, IUpdatable
 
         bullet.StartMovementFrom(shotingPoint.position, shotingPoint.rotation);
 
-        _shootingTrigger.ResetTrigger();
+        ResetTrigger();
     }
 }
