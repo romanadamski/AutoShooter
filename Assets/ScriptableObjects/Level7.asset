@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level7
   m_EditorClassIdentifier: 
   levelNumber: 7
-  objectsCount: 1000
+  shootersCount: 1
   imageColor: {r: 0, g: 1, b: 0.50524616, a: 1}

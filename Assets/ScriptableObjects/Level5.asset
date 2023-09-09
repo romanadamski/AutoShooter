@@ -13,11 +13,5 @@ MonoBehaviour:
   m_Name: Level5
   m_EditorClassIdentifier: 
   levelNumber: 5
-  objectsCount: 1
+  shootersCount: 1000
   imageColor: {r: 0.91149545, g: 1, b: 0, a: 1}
-  releasingFrequency:
-    item1: 0
-    item2: 0
-  speedRange:
-    item1: 0
-    item2: 0

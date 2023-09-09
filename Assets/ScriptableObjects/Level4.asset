@@ -13,11 +13,5 @@ MonoBehaviour:
   m_Name: Level4
   m_EditorClassIdentifier: 
   levelNumber: 4
-  objectsCount: 500
+  shootersCount: 500
   imageColor: {r: 1, g: 0, b: 0, a: 1}
-  asteroidsReleasingFrequency:
-    item1: 0
-    item2: 0
-  asteroidsSpeedRange:
-    item1: 0
-    item2: 0

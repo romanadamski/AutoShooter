@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level6
   m_EditorClassIdentifier: 
   levelNumber: 6
-  objectsCount: 5
+  shootersCount: 5
   imageColor: {r: 1, g: 0, b: 0.83413935, a: 1}
