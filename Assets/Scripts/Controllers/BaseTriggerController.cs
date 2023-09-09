@@ -11,7 +11,7 @@ public abstract class BaseTriggerController : MonoBehaviour
 
     private void Awake()
     {
-        _timerController = new TimerController(TimerElapsed);
+        _timerController = new TimerController(TimerElapsed, TimerType.Cached);
     }
 
     private void OnEnable()
@@ -29,7 +29,6 @@ public abstract class BaseTriggerController : MonoBehaviour
         OnTimerElapsed();
 
         TriggerActive = true;
-        StartCounting();
     }
 
     protected virtual void OnTimerElapsed() { }

@@ -16,7 +16,6 @@ public class MortalShooterController : BaseMortalObjectController
 
     private void SetLivesCount()
     {
-        Debug.Log($"SetLivesCount() {LivesCount}");
         LivesCount = GameSettingsManager.Instance.Settings.ShooterLives;
     }
 

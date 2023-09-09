@@ -50,21 +50,12 @@ public class GameplayManager : BaseManager<GameplayManager>
         DestroyAllPlayerObjects();
         EventsManager.Instance.OnGameplayEnded();
     }
-    List<string> duplicates = new List<string>();
+
     private void ShooterShoted(uint lives, GameObject shooter)
     {
         if (lives == 0)
         {
             DecrementScore();
-            if (duplicates.Contains(shooter.name))
-            {
-                Debug.Log($"DecrementScore EXIST {CurrentScore - 1} {shooter.name} {lives}");
-            }
-            else
-            {
-                Debug.Log($"DecrementScore {CurrentScore - 1} {shooter.name} {lives}");
-                duplicates.Add(shooter.name);
-            }
         }
     }
 

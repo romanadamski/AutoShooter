@@ -16,14 +16,6 @@ public class StateMachine : MonoBehaviour
         CurrentState.Enter();
     }
 
-    private void Update()
-    {
-        if (CurrentState != null)
-        {
-            CurrentState.Update();
-        }
-    }
-
     public void Clear()
     {
         if (CurrentState != null)

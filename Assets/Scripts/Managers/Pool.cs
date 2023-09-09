@@ -13,19 +13,16 @@ public class Pool
 
     [HideInInspector]
     public int ObjectCount;
+    [HideInInspector]
+    public Transform Parent;
 
     /// <summary>
     /// Type choosen in prefab from Poolable type dropdown
     /// </summary>
     public string PoolableNameType => PoolObjectPrefab.GetComponent<BasePoolableController>().PoolableType;
 
-    /// <summary>
-    /// Type choosen by attached Poolable component
-    /// </summary>
-    public Type PoolableComponentType => PoolObjectPrefab.GetComponent<BasePoolableController>().GetType();
-
     [HideInInspector]
-    public List<GameObject> ObjectsOutsidePool = new List<GameObject>();
+    public List<BasePoolableController> ObjectsOutsidePool = new List<BasePoolableController>();
 
     public void ReturnAllToPool()
     {
@@ -36,12 +33,13 @@ public class Pool
         ObjectsOutsidePool.Clear();
     }
 
-    public void ReturnToPool(GameObject objectToReturn)
+    public void ReturnToPool(BasePoolableController objectToReturn)
     {
         if (!PooledObjects.Contains(objectToReturn.gameObject))
         {
             objectToReturn.gameObject.SetActive(false);
             PooledObjects.Enqueue(objectToReturn.gameObject);
+            objectToReturn.OnReturnToPool();
         }
     }
 }

@@ -11,9 +11,4 @@ public class WinState : State
     {
 
     }
-
-    protected override void OnUpdate()
-    {
-
-    }
 }

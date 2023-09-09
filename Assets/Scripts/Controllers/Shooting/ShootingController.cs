@@ -22,11 +22,9 @@ public class ShootingController : MonoBehaviour, IUpdatable
             return;
         }
 
-        var bullet = ObjectPoolingManager.Instance.GetFromPool(GameObjectTagsConstants.BULLET).GetComponent<ResizableController>();
-        bullet.transform.rotation = shotingPoint.rotation;
-        bullet.transform.position = shotingPoint.position + bullet.transform.up * bullet.Bounds.size.y;
-        bullet.gameObject.SetActive(true);
-        bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.up * GameSettingsManager.Instance.Settings.BulletMovementSpeed);
+        var bullet = ObjectPoolingManager.Instance.GetFromPool(GameObjectTagsConstants.BULLET).GetComponent<BulletMovementController>();
+
+        bullet.StartMovementFrom(shotingPoint.position, shotingPoint.rotation);
 
         _shootingTrigger.ResetTrigger();
     }

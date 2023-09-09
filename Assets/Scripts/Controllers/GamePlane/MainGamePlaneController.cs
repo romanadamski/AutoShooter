@@ -8,6 +8,8 @@ public class MainGamePlaneController : BaseGamePlane
 
     private List<IUpdatable> _rotateShooters = new List<IUpdatable>();
 
+    public override Bounds GameBounds => ground.Bounds;
+
     private void Start()
     {
         SubscribeToEvents();
@@ -22,7 +24,7 @@ public class MainGamePlaneController : BaseGamePlane
     {
         if (lives > 0)
         {
-            var timer = new TimerController(() => SpawnShooterInRandomPosition(shooter));
+            var timer = new TimerController(() => SpawnShooterInRandomPosition(shooter), TimerType.Transient);
             timer.SetInterval(GameSettingsManager.Instance.Settings.ShooterSpawnLatency);
             timer.StartCounting();
         }
@@ -31,8 +33,9 @@ public class MainGamePlaneController : BaseGamePlane
     public override void SpawnGameplayObjects()
     {
         var shooterCount = LevelSettingsManager.Instance.CurrentLevel.ObjectsCount;
+        if (shooterCount == 0) return;
 
-        ground.SetSize(new Vector3(Mathf.Pow(shooterCount, 0.8f), 0 , Mathf.Pow(shooterCount, 0.8f)));
+        ground.SetSize(new Vector3(Mathf.Pow(shooterCount, 1f), 0 , Mathf.Pow(shooterCount, 1f)));
         _rotateShooters.Clear();
 
         for (int i = 0; i < shooterCount; i++)
@@ -43,6 +46,7 @@ public class MainGamePlaneController : BaseGamePlane
             _rotateShooters.AddRange(shooter.GetComponents<IUpdatable>());
         }
     }
+
     //todo do not touch each other
     private void SpawnShooterInRandomPosition(GameObject shooter)
     {

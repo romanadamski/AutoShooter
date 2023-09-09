@@ -8,29 +8,29 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
     private List<Pool> pools = new List<Pool>();
     public List<Pool> Pools => pools;
 
-    private Transform _objectsParent;
-
     private void Start()
     {
-
         foreach (var pool in pools)
         {
-            CreateObjectsParent(pool.PoolableNameType);
+            pool.Parent = CreateObjectsParent(pool.PoolableNameType);
             for (int i = 0; i < pool.StartPoolCount; i++)
             {
-                var newObject = Instantiate(pool.PoolObjectPrefab.gameObject, _objectsParent);
+                var newObject = Instantiate(pool.PoolObjectPrefab.gameObject, pool.Parent);
                 newObject.gameObject.SetActive(false);
-                newObject.name = newObject.name.Replace("(Clone)", $"{newObject.GetInstanceID()}");
+                SetPoolableObjectName(newObject);
                 pool.PooledObjects.Enqueue(newObject);
                 pool.ObjectCount++;
             }
         }
     }
 
-    private void CreateObjectsParent(string parentName)
+    private void SetPoolableObjectName(GameObject poolableObject)
     {
-        _objectsParent = Instantiate(new GameObject(parentName + "Parent").transform, GameLauncher.Instance.GamePlane.transform);
+        poolableObject.name = poolableObject.name.Replace("(Clone)", $"{poolableObject.GetInstanceID()}");
     }
+
+private Transform CreateObjectsParent(string parentName)
+        => Instantiate(new GameObject(parentName + "Parent").transform, GameLauncher.Instance.GamePlane.transform);
 
     public BasePoolableController GetFromPool(string poolableType)
     {
@@ -42,17 +42,18 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
         }
         if (pool.PooledObjects.Count > 0)
         {
-            var newObject = pool.PooledObjects.Dequeue();
+            var newObject = pool.PooledObjects.Dequeue().GetComponent<BasePoolableController>();
             pool.ObjectsOutsidePool.Add(newObject);
-            return newObject.GetComponent<BasePoolableController>();
+            return newObject;
         }
         else
         {
             if (pool.CanGrow)
             {
                 pool.ObjectCount++;
-                var newObject = Instantiate(pool.PoolObjectPrefab, _objectsParent);
-                pool.ObjectsOutsidePool.Add(newObject.gameObject);
+                var newObject = Instantiate(pool.PoolObjectPrefab, pool.Parent);
+                SetPoolableObjectName(newObject.gameObject);
+                pool.ObjectsOutsidePool.Add(newObject.GetComponent<BasePoolableController>());
                 return newObject;
             }
             else
@@ -76,7 +77,7 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
     public void ReturnToPool(BasePoolableController objectToReturn)
     {
         var pool = GetPoolByPoolableNameType(objectToReturn.PoolableType);
-        pool.ReturnToPool(objectToReturn.gameObject);
+        pool.ReturnToPool(objectToReturn);
     }
 
     private Pool GetPoolByPoolableNameType(string poolableType)

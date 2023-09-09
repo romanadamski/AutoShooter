@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour
         _isMovementActive = true;
     }
 
-    void Update()
+    private void Update()
     {
         if (!_isMovementActive) return;
 

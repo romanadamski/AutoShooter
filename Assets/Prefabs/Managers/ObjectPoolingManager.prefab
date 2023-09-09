@@ -51,7 +51,7 @@ MonoBehaviour:
     ObjectCount: 0
     ObjectsOutsidePool: []
   - StartPoolCount: 500
-    PoolObjectPrefab: {fileID: -2714247352275232577, guid: 7d7ca18c7be8b7e4da8276ffd446d128, type: 3}
+    PoolObjectPrefab: {fileID: 8017228863675610839, guid: 7d7ca18c7be8b7e4da8276ffd446d128, type: 3}
     CanGrow: 1
     ObjectCount: 0
     ObjectsOutsidePool: []
