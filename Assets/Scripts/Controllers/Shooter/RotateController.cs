@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class RotateController : TimerTriggerController, IUpdatable
 {
-    private Quaternion _rotation;
+    private GameSettingsScriptableObject _settings;
 
     protected override float Interval => GetRandomTimeFrequency();
 
     public Quaternion RotationValue { get; private set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        _settings = GameSettingsManager.Instance.Settings;
+    }
 
     protected override void OnTimerElapsed()
     {
@@ -18,17 +24,11 @@ public class RotateController : TimerTriggerController, IUpdatable
         if (!TriggerActive) return;
         if (!gameObject.activeInHierarchy) return;
 
-        _rotation = Quaternion.Lerp(
+        transform.rotation = Quaternion.Lerp(
                 transform.rotation,
                 RotationValue,
-                Time.deltaTime * GameSettingsManager.Instance.Settings.ShooterRotationSpeed);
+                Time.deltaTime * _settings.ShooterRotationSpeed);
 
-        DoRotate();
-    }
-
-    private void DoRotate()
-    {
-        transform.rotation = _rotation;
         if (transform.rotation.Equals(RotationValue))
         {
             ResetTrigger();
@@ -38,7 +38,7 @@ public class RotateController : TimerTriggerController, IUpdatable
     private float GetRandomTimeFrequency()
     {
         return Random.Range(
-            GameSettingsManager.Instance.Settings.RotatingTimeFrequency.Item1,
-            GameSettingsManager.Instance.Settings.RotatingTimeFrequency.Item2);
+            _settings.RotatingTimeFrequency.Item1,
+            _settings.RotatingTimeFrequency.Item2);
     }
 }

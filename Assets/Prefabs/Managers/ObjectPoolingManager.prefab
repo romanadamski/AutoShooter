@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6189231801890193458
 MonoBehaviour:
@@ -51,7 +51,7 @@ MonoBehaviour:
     ObjectCount: 0
     Parent: {fileID: 0}
     ObjectsOutsidePool: []
-  - StartPoolCount: 3000
+  - StartPoolCount: 500
     PoolObjectPrefab: {fileID: 8017228863675610839, guid: 7d7ca18c7be8b7e4da8276ffd446d128, type: 3}
     CanGrow: 1
     ObjectCount: 0

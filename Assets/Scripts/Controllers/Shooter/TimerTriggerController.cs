@@ -8,7 +8,7 @@ public abstract class TimerTriggerController : MonoBehaviour
 
     public bool TriggerActive { get; private set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _timerController = new TimerController(TimerElapsed, TimerType.Cached);
     }
@@ -34,11 +34,6 @@ public abstract class TimerTriggerController : MonoBehaviour
 
     private void StartCounting()
     {
-        if (_timerController == null)
-        {
-            _timerController = new TimerController(TimerElapsed, TimerType.Cached);
-        }
-
         _timerController.SetInterval(Interval);
         _timerController.Start();
     }

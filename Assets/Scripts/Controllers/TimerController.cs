@@ -13,6 +13,7 @@ public class TimerController : IUpdatable
     private float _interval;
     private float _intervalCounting;
     private event Action _timerElapsed;
+    private TimerManager _timerManager;
     
     public TimerType TimerType { get; private set; }
 
@@ -21,7 +22,9 @@ public class TimerController : IUpdatable
         _timerElapsed = timerElapsed;
         TimerType = timerType;
 
-        TimerManager.Instance.AddTimer(this);
+        _timerManager = TimerManager.Instance;
+
+        _timerManager.AddTimer(this);
     }
 
     public void OnUpdate()
@@ -50,7 +53,7 @@ public class TimerController : IUpdatable
         switch (TimerType)
         {
             case TimerType.Transient:
-                TimerManager.Instance.RemoveTimer(this);
+                _timerManager.RemoveTimer(this);
                 break;
             case TimerType.Cached:
                 _intervalCounting = _interval;

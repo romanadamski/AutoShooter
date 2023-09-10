@@ -5,7 +5,17 @@ public class ShootingController : TimerTriggerController, IUpdatable
     [SerializeField]
     private Transform shotingPoint;
 
+    private ObjectPoolingManager _poolingManager;
+    private const string BULLET_TAG = GameObjectTagsConstants.BULLET;
+
     protected override float Interval => 1.0f;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _poolingManager = ObjectPoolingManager.Instance;
+    }
 
     public void OnUpdate()
     {
@@ -17,7 +27,7 @@ public class ShootingController : TimerTriggerController, IUpdatable
             return;
         }
 
-        var bullet = ObjectPoolingManager.Instance.GetFromPool(GameObjectTagsConstants.BULLET).GetComponent<BulletMovementController>();
+        var bullet = _poolingManager.GetFromPool(BULLET_TAG).GetComponent<BulletMovementController>();
 
         bullet.StartMovementFrom(shotingPoint.position, shotingPoint.rotation);
 
