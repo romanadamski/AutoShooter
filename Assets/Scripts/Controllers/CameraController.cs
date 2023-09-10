@@ -8,15 +8,11 @@ public class CameraController : MonoBehaviour
     private float movementSpeed = 5;
 
     private Camera _camera;
-    private Vector3 _startCameraPosition;
-    private Quaternion _startCameraRotation;
     private bool _isMovementActive;
 
     private void Awake()
     {
         _camera = GetComponent<Camera>();
-        _startCameraPosition = _camera.transform.position;
-        _startCameraRotation = _camera.transform.rotation;
 
         SubscribeToEvents();
     }
@@ -67,7 +63,9 @@ public class CameraController : MonoBehaviour
 
     private void SetDefaultCameraValues()
     {
-        _camera.transform.localPosition = _startCameraPosition;
-        _camera.transform.localRotation = _startCameraRotation;
+        var gameBounds = GameLauncher.Instance.GamePlane.GameBounds;
+        var yPosition = Mathf.Clamp(0.3f * gameBounds.size.z, 3, 0.3f * gameBounds.size.z);
+        _camera.transform.LookAt(new Vector3(gameBounds.center.x, 0, gameBounds.center.z));
+        _camera.transform.position = new Vector3(gameBounds.center.x, yPosition, gameBounds.min.z);
     }
 }

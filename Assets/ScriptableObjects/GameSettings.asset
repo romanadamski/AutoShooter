@@ -19,4 +19,4 @@ MonoBehaviour:
   rotatingTimeFrequency:
     item1: 0
     item2: 1
-  bulletMovementSpeed: 300
+  bulletMovementSpeed: 100

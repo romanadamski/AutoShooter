@@ -9,7 +9,7 @@ public class MainGamePlaneController : BaseGamePlane
 
     private readonly List<IUpdatable> _rotateShooters = new ();
     private uint _currentUniquePositionSearchAttempt;
-    private Vector3 _shooterSize;
+    public Vector3 _shooterSize;
 
     private const uint UNIQUE_POSITION_SEARCH_MAX_ATTEMPTS = 50;
 
