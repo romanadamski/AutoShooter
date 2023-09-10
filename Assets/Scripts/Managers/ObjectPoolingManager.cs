@@ -12,24 +12,30 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
         foreach (var pool in pools)
         {
             pool.Parent = CreateObjectsParent(pool.PoolableNameType);
+            pool.Parent.name = pool.Parent.name.Replace("(Clone)", string.Empty);
+
             for (int i = 0; i < pool.StartPoolCount; i++)
             {
-                var newObject = Instantiate(pool.PoolObjectPrefab.gameObject, pool.Parent);
+                var newObject = Instantiate(pool.PoolObjectPrefab, pool.Parent);
                 newObject.gameObject.SetActive(false);
-                SetPoolableObjectName(newObject);
-                pool.PooledObjects.Enqueue(newObject.GetComponent<BasePoolableController>());
+                SetObjectName(newObject.gameObject);
+                pool.PooledObjects.Enqueue(newObject);
                 pool.ObjectCount++;
             }
         }
     }
 
-    private void SetPoolableObjectName(GameObject poolableObject)
+    private void SetObjectName(GameObject poolableObject)
     {
         poolableObject.name = poolableObject.name.Replace("(Clone)", $"{poolableObject.GetInstanceID()}");
     }
 
     private Transform CreateObjectsParent(string parentName)
-        => Instantiate(new GameObject(parentName + "Parent").transform, GameLauncher.Instance.GamePlane.transform);
+    {
+        var parent = new GameObject(parentName + "Parent");
+        parent.transform.SetParent(GameLauncher.Instance.GamePlane.transform);
+        return parent.transform;
+    }
 
     public BasePoolableController GetFromPool(string poolableType)
     {
@@ -51,7 +57,7 @@ public class ObjectPoolingManager : BaseManager<ObjectPoolingManager>
             {
                 pool.ObjectCount++;
                 var newObject = Instantiate(pool.PoolObjectPrefab, pool.Parent);
-                SetPoolableObjectName(newObject.gameObject);
+                SetObjectName(newObject.gameObject);
                 pool.ObjectsOutsidePool.Add(newObject);
                 return newObject;
             }
