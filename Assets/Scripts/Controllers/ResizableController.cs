@@ -6,11 +6,14 @@ public class ResizableController : MonoBehaviour
     private float _scalePerSizeX;
     private float _scalePerSizeY;
     private float _scalePerSizeZ;
+    private Renderer[] _renderers;
     
     public Bounds Bounds { get; private set; }
 
     private void Awake()
     {
+        _renderers = GetComponentsInChildren<Renderer>();
+
         SetBounds();
 
         _scalePerSizeX = transform.localScale.x / Bounds.size.x;
@@ -20,8 +23,6 @@ public class ResizableController : MonoBehaviour
 
     private void SetBounds()
     {
-        var renderers = GetComponentsInChildren<Renderer>();
-
         var maxX = float.NegativeInfinity;
         var maxY = float.NegativeInfinity;
         var maxZ = float.NegativeInfinity;
@@ -30,7 +31,7 @@ public class ResizableController : MonoBehaviour
         var minY = float.PositiveInfinity;
         var minZ = float.PositiveInfinity;
 
-        foreach (var renderer in renderers)
+        foreach (var renderer in _renderers)
         {
             if (maxX < renderer.bounds.max.x)
             {
