@@ -3,20 +3,20 @@ using System.Linq;
 
 public class BulletMovementManager : BaseManager<BulletMovementManager>
 {
-    private List<IUpdatable> _bulletMovementControllers = new List<IUpdatable>();
+    private Dictionary<int, IUpdatable> _bulletMovementControllers = new Dictionary<int, IUpdatable>();
 
-    public void AddBullet(IUpdatable bullet)
+    public void AddBullet(int id, IUpdatable bullet)
     {
-        _bulletMovementControllers.Add(bullet);
+        _bulletMovementControllers.TryAdd(id, bullet);
     }
 
-    public void RemoveBullet(IUpdatable bullet)
+    public void RemoveBullet(int id)
     {
-        _bulletMovementControllers.Remove(bullet);
+        _bulletMovementControllers.Remove(id);
     }
 
     private void FixedUpdate()
     {
-        _bulletMovementControllers.ToList().ForEach(bullet => bullet.OnUpdate());
+        _bulletMovementControllers.ToList().ForEach(bullet => bullet.Value.OnUpdate());
     }
 }

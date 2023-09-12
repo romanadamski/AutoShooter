@@ -23,7 +23,7 @@ public class BulletMovementController : MonoBehaviour, IUpdatable
 
         _rigidbody.velocity = transform.up * _settings.BulletMovementSpeed;
 
-        BulletMovementManager.Instance.AddBullet(this);
+        BulletMovementManager.Instance.AddBullet(gameObject.GetInstanceID(), this);
     }
 
     public void OnUpdate()
